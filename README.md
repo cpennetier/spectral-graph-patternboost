@@ -2,7 +2,7 @@
 
 Maximizing algebraic connectivity per edge on sphere-embedded graphs under geographic distance constraints, using [Axplorer](https://github.com/AxiomMath/axplorer)'s PatternBoost framework.
 
-**[Research Note (PDF)](paper/paper.pdf)** · 14 pages · $20 of compute · One weekend
+**[Research Note (PDF)](paper/paper.pdf)** · 14 pages · \$20 of compute · One weekend
 
 ---
 
