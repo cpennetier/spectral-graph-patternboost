@@ -12,7 +12,9 @@ Given $N$ hubs with fixed positions on the unit sphere, find a connected graph $
 
 $$\Phi(G) = \frac{\lambda_2(L_G) \cdot N}{|E|}$$
 
-subject to: all edges satisfy $d(\mathbf{p}_i, \mathbf{p}_j) \leq r_{\max}$ (great-circle distance).
+subject to the geographic constraint (great-circle distance):
+
+$$d(\mathbf{p}_i, \mathbf{p}_j) \leq r_{\max} \quad \forall\; (i,j) \in E$$
 
 This score measures **spectral efficiency** — algebraic connectivity (resilience to partitioning, via the Cheeger inequality) normalized by edge count (cost). The geographic constraint captures the reality that direct connections are only viable within a radius of feasibility.
 
