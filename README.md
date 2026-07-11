@@ -23,24 +23,24 @@ The repository treats this as an empirical research question rather than assumin
 
 ## Problem
 
-Given \(N\) vertices with fixed positions on the unit sphere, find a connected graph \(G=(V,E)\) that maximizes
+Given $N$ vertices with fixed positions on the unit sphere, find a connected graph $G=(V,E)$ that maximizes
 
-\[
+$$
 \Phi(G)=\frac{\lambda_2(L_G)\,N}{|E|},
-\]
+$$
 
 subject to the great-circle constraint
 
-\[
+$$
 d(\mathbf p_i,\mathbf p_j)\le r_{\max}
 \qquad \forall (i,j)\in E.
-\]
+$$
 
 Here:
 
-- \(\lambda_2(L_G)\) is the Fiedler value, the second-smallest eigenvalue of the graph Laplacian;
-- \(|E|\) is the number of edges;
-- \(r_{\max}\) defines the admissible-edge mask induced by the spherical embedding.
+- $\lambda_2(L_G)$ is the Fiedler value, the second-smallest eigenvalue of the graph Laplacian;
+- $|E|$ is the number of edges;
+- $r_{\max}$ defines the admissible-edge mask induced by the spherical embedding.
 
 The objective rewards **spectral connectivity per edge**. The geometric mask removes the symmetry available to unconstrained extremal constructions: the feasible graph family depends on the sampled vertex positions.
 
@@ -57,23 +57,23 @@ The exact eigensolver remains the source of truth. The surrogate proposes or ran
 
 ## Results
 
-| Setting | KNN \(k=5\) | PatternBoost best | Improvement |
+| Setting | KNN $k=5$ | PatternBoost best | Improvement |
 |---|---:|---:|---:|
-| Tight constraint (\(r_{\max}=0.8\), 70 admissible edges) | 0.072 | 0.087 | **+20.7%** |
-| Moderate constraint (\(r_{\max}=1.2\), 140 admissible edges) | 0.141 | 0.459 | **+226%** |
+| Tight constraint ($r_{\max}=0.8$, 70 admissible edges) | 0.072 | 0.087 | **+20.7%** |
+| Moderate constraint ($r_{\max}=1.2$, 140 admissible edges) | 0.141 | 0.459 | **+226%** |
 
 ![Learning dynamics](figures/fig5_combined_learning.png)
 
-*Left: tight constraint, converged by epoch 14. Right: moderate constraint, still improving at epoch 25. Dashed lines show the KNN \(k=5\) baseline.*
+*Left: tight constraint, converged by epoch 14. Right: moderate constraint, still improving at epoch 25. Dashed lines show the KNN $k=5$ baseline.*
 
 ![Baseline comparison](figures/fig3_baseline_comparison.png)
 
 The broader result is deliberately mixed:
 
 - Classical Barabási–Albert, Watts–Strogatz, and Erdős–Rényi generators are poor constrained baselines: in the tested setup, 84% of their proposed edges violate the distance mask.
-- Simulated annealing reaches higher single-instance scores at \(N=30\). This is a useful negative result: at this scale, the spectral landscape remains tractable for a strong classical local-search method.
-- A 22,337-parameter GNN surrogate predicts Fiedler scores with Spearman \(\rho=0.963\).
-- At \(N=30\), the surrogate does not create a wall-clock advantage because exact eigendecomposition is already cheap. Its potential value begins only when the \(O(N^3)\) spectral calculation becomes material.
+- Simulated annealing reaches higher single-instance scores at $N=30$. This is a useful negative result: at this scale, the spectral landscape remains tractable for a strong classical local-search method.
+- A 22,337-parameter GNN surrogate predicts Fiedler scores with Spearman $\rho=0.963$.
+- At $N=30$, the surrogate does not create a wall-clock advantage because exact eigendecomposition is already cheap. Its potential value begins only when the $O(N^3)$ spectral calculation becomes material.
 
 ## Architecture
 
@@ -81,7 +81,7 @@ The broader result is deliberately mixed:
 
 The Axplorer environment in `src/envs/` implements:
 
-- vertex positions sampled uniformly on \(S^2\), with a connectivity check;
+- vertex positions sampled uniformly on $S^2$, with a connectivity check;
 - an admissible-edge mask from great-circle distance;
 - disconnected-component repair using the shortest feasible cross-component edge;
 - greedy edge swaps for local improvement;
@@ -94,7 +94,7 @@ The Axplorer environment in `src/envs/` implements:
 
 - 4 message-passing layers;
 - residual connections and layer normalization;
-- node features \((x,y,z,\mathrm{degree})\);
+- node features $(x,y,z,\mathrm{degree})$;
 - edge features given by great-circle distance;
 - MSE plus pairwise-ranking loss;
 - no PyG dependency.
@@ -224,10 +224,10 @@ tests/         environment and scoring tests
 
 ## Scope and limitations
 
-- All reported experiments use \(N=30\).
+- All reported experiments use $N=30$.
 - The two constraint regimes use one sampled vertex layout each; multi-layout and multi-seed variance are not reported.
 - Simulated annealing outperforms PatternBoost on the tested single-instance comparison.
-- The surrogate has no measured speed advantage at \(N=30\).
+- The surrogate has no measured speed advantage at $N=30$.
 - The Fiedler value is a spectral proxy. It is not a complete measure of the downstream behavior of a graph.
 - Scaling behavior beyond the tested regime remains open.
 
